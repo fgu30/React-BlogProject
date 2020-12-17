@@ -4,8 +4,8 @@ class Todo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputValue: 'hello',
-            list: ['GTA5', 'Witcher3', 'Cyberpunk2077']
+            inputValue: '',
+            list: []
         }
     }
     //必须有一个包裹函数
@@ -19,7 +19,8 @@ class Todo extends Component {
                 <ul>
                     {
                         this.state.list.map((item, index) => {
-                            return <li>{item}</li>
+                            return (<li key={index}
+                                onClick={this.handleItmDelete.bind(this, index)}>{item}</li>)
                         })
                     }
                 </ul>
@@ -34,7 +35,24 @@ class Todo extends Component {
 
     }
 
-    handleBtnClick(e) {
+    handleBtnClick() {
+        this.setState({
+            //...this.state.list 是list拼接的内容
+            //拼接
+            list: [...this.state.list, this.state.inputValue],
+            inputValue: ''
+        })
+
+    }
+
+    handleItmDelete(index) {
+        const list = [...this.state.list];
+        list.splice(index, 1);
+        //1 代表一个
+        this.setState({
+            list: list
+        })
+        console.log(index);
 
     }
 }
